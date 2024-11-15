@@ -1,0 +1,176 @@
+<!DOCTyPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .navbar button {
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .navbar select {
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .styled-link {
+            background-color: #28a745; 
+            color: white; 
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px; 
+            display: inline-block; 
+        }
+        .styled-link:hover {
+            background-color: #0056b3; 
+        }
+        a {
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .navbar button:hover {
+            background-color: #e7e7e7;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .input-section, .output-section {
+            width: 45%;
+        }
+        textarea {
+            width: 100%;
+            height: 400px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .actions button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .actions button.reset {
+            background-color: #dc3545;
+        }
+        .actions button:hover {
+            background-color: #218838;
+        }
+        .actions button.reset:hover {
+            background-color: #c82333;
+        }
+        .actions form {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>USAC-APP</h1>
+         <!-- Formulario para cargar archivo -->
+         <!--<form action="{% url 'cargar_archivo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="archivo" accept=".xml" multiple required>
+            <button type="submit">Cargar Archivo</button> 
+        </form>-->
+        <!--<button>Peticiones</button> -->
+        <form action="{% url 'mostrar_respuesta' %}" method="post">
+            {% csrf_token %}
+            <select name="select" onchange="this.form.submit()">
+                <option value="" selected>PETICIONES</option>
+                <option value="consultar_datos">Consultar Datos</option>
+                <option value="resumen_clasificacion_fechas">Resumen de Clasificación Por Fechas</option>
+                <option value="resumen_rango_fecha">Resumen por Rango de Fecha</option>
+                <option value="reporte_pdf">Reporte en PDF</option>
+                <option value="prueba_mensaje">Prueba de Mensaje</option>
+            </select>
+        </form>
+        <!-- opciones de Ayuda -->
+        <form action="{% url 'datos' %}" method="post">
+            {% csrf_token %}
+            <select name="select" onchange="this.form.submit()">
+                <option value="" selected>AYUDA</option>
+                <option value="datos_estudiante">Datos del Estudiante</option>
+                <option value="documentacion">Documentacion</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Entrada Section -->
+        <div class="input-section">
+            <h2>Entrada</h2>
+            <textarea readonly>{{ contenido_archivo }}</textarea>
+        </div>
+
+      <div>
+        <p>{{ mensajes }}</p>
+      </div>
+        <!-- Salida Section -->
+        <div class="output-section">
+            <h2>Salida</h2>
+            <textarea readonly>{{ xml_respuesta }}</textarea>
+        </div>      
+    </div> 
+
+    <!-- Buttons -->
+    <div class="actions">
+        <!-- <button>Enviar</button> -->
+        <!--<a class="styled-link" href="{% url 'mostrar_respuesta' %}">Enviar</a>-->
+        <form action="{% url 'cargar_archivo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="archivo" accept=".xml" multiple required>
+            <button type="submit">enviar</button>
+        </form>
+        <!--<button class="reset">Reset</button> -->
+         <!-- Formulario para resetear la base de datos -->
+         <form action="{% url 'resetear_bd' %}" method="POST">
+            {% csrf_token %}
+            <button class="reset">Reset</button>
+        </form>
+    </div>
+
+</body>
+</html>

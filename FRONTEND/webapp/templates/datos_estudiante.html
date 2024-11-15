@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos del Estudiante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        a {
+            text-align: center;
+            color: #333;
+        }
+        .student-info {
+            margin-top: 20px;
+        }
+        .student-info p {
+            margin: 10px 0;
+            color: #555;
+        }
+        .student-info span {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Datos del Estudiante</h1>
+        <div class="student-info">
+            <p><span>Nombre :</span></p>
+            <p><span>Carne :</span></p>
+            <p><span>Carrera :</span> Ingenieria en Ciencias y Sistemas</p>
+            <p><span>Semestre :</span> Segundo Sestre 2024</p>
+            <p><span>Curso :</span></p>
+        </div>
+        <a href="{% url 'mostrar_respuesta' %}" class="back-button">Volver a Inicio</a>
+    </div>
+</body>
+</html>

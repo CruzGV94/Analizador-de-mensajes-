@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen por Rango de Fechas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Resumen de Mensajes por Rango de Fechas</h2>
+    <canvas id="chartMensajes" width="400" height="200"></canvas>
+    <p>Empresa: {{ empresa }}</p>
+    <p>Desde: {{ fecha_inicio }}</p>
+    <p>Hasta: {{ fecha_fin }}</p>
+
+    <script>
+        const data = {{ resultados|safe }};  // Asegúrate de que resultados sea una lista válida
+
+        const fechas = data.map(item => item.fecha);
+        const totalMensajes = data.map(item => item.total_mensajes);
+        const positivos = data.map(item => item.positivos);
+        const negativos = data.map(item => item.negativos);
+        const neutros = data.map(item => item.neutros);
+
+        const ctx = document.getElementById('chartMensajes').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: fechas,
+                datasets: [
+                    {
+                        label: 'Total de Mensajes',
+                        data: totalMensajes,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Positivos',
+                        data: positivos,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Negativos',
+                        data: negativos,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Neutros',
+                        data: neutros,
+                        backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <a href="{% url 'mostrar_respuesta' %}" class="back-button">Volver a Inicio</a>
+</body>
+</html>

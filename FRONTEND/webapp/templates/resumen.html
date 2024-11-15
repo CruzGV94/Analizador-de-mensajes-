@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<p>Total mensajes: {{ total_mensajes }}</p>
+<p>Positivos: {{ positivos }}</p>
+<p>Negativos: {{ negativos }}</p>
+<p>Neutros: {{ neutros }}</p>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen de Clasificación por Fecha</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Resumen de Clasificación de Mensajes</h1>
+    <p>Fecha: {{ fecha }}</p>
+    <p>Empresa: {{ empresa }}</p>
+
+    <!-- Canvas para el gráfico -->
+    <canvas id="grafica"></canvas>
+
+    <script>
+        // Cargar datos desde Django
+        const totalMensajes = {{ total_mensajes }};
+        const positivos = {{ positivos }};
+        const negativos = {{ negativos }};
+        const neutros = {{ neutros }};
+
+        // Crear la gráfica
+        const ctx = document.getElementById('grafica').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total', 'Positivos', 'Negativos', 'Neutros'],
+                datasets: [{
+                    label: 'Clasificación de Mensajes',
+                    data: [totalMensajes, positivos, negativos, neutros],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',  // Total
+                        'rgba(54, 162, 235, 0.6)',  // Positivos
+                        'rgba(255, 99, 132, 0.6)',  // Negativos
+                        'rgba(255, 206, 86, 0.6)'   // Neutros
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Resumen de Clasificación por Fecha' }
+                }
+            }
+        });
+    </script>
+    <a href="{% url 'mostrar_respuesta' %}" class="back-button">Volver a Inicio</a>
+</body>
+</html>
+
